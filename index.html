@@ -1,184 +1,266 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人頁面 | [Chiawei]</title>
+    <title>Chiawei | 個人網站</title>
+    <meta name="description" content="Chiawei - 前端工程師 / UI 設計師 / 獨立開發者">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        /* 1. 全局和排版設定 */
+        :root {
+            --bg: #0a0e17;
+            --bg2: #121825;
+            --text: #e0e7ff;
+            --text-light: #94a3b8;
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --border: #1e293b;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #E8F5E9; /* 新的淺綠色背景 */
-            color: #212121; /* 標準文字顏色，更深一些 */
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1500px;
+        }
+
+        /* 3D 背景網格 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0,212,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+                linear-gradient(135deg, transparent 50%, rgba(0,212,255,0.03) 100%);
+            z-index: -2;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: translateZ(-500px) scale(2);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        header {
+            height: 100vh;
+            min-height: 680px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            position: relative;
         }
 
-        /* 2. 容器設定 */
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #ffffff; /* 內容區域依然使用白色 */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 稍微明顯一點的陰影 */
-            border-radius: 10px; /* 圓角稍微大一點 */
-            border-top: 5px solid #4CAF50; /* 頂部增加主題色邊框 */
+        /* 3D 立體名字 */
+        .hero h1 {
+            font-size: 6.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #00d4ff, #c0ffff, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 10px 20px rgba(0,0,0,0.4),
+                0 0 80px rgba(0,212,255,0.5);
+            transform: translateZ(60px);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateZ(60px) translateY(0); }
+            50% { transform: translateZ(60px) translateY(-20px); }
         }
 
-        /* 3. 標題和個人資訊 */
-        h1 {
-            color: #212121;
-            font-size: 2.8em; /* 字體稍微大一點 */
-            margin-bottom: 0.1em;
-            letter-spacing: 1.5px;
-        }
-
-        h2 {
-            color: #4CAF50; /* 主題色：活潑的綠色 */
-            font-size: 1.3em;
-            font-weight: 400; /* 稍微粗一點的字體 */
-            margin-top: 0;
-            margin-bottom: 2em;
-        }
-
-        h3 {
-            color: #388E3C; /* 區塊標題使用深一點的主題色 */
-            margin-top: 2.5em;
-            margin-bottom: 1em;
-            border-bottom: 2px solid #81C784; /* 輔助色底線 */
-            padding-bottom: 5px;
-            display: inline-block; /* 讓底線只在文字下方 */
-        }
-
-        p {
-            margin: 1.2em 0;
-            font-size: 1.15em;
-            color: #444; /* 段落文字顏色 */
-        }
-        
-        /* 4. 列表樣式 (例如專案或興趣) */
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 2em;
-            display: inline-block;
-            text-align: left;
-            background-color: #F1F8E9; /* 列表背景使用淺輔助色 */
-            padding: 15px 30px;
-            border-radius: 8px;
-        }
-
-        ul li {
-            padding: 10px 0;
-            border-bottom: 1px dashed #A5D6A7; /* 虛線分隔線，使用輔助色 */
-            color: #333;
-        }
-        
-        ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* 5. 連結樣式 */
-        a {
-            color: #4CAF50; /* 連結使用主題色 */
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #388E3C; /* 滑鼠移入時顏色加深 */
-            text-decoration: underline; /* 增加底線，提升互動性 */
+        .hero p {
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin: 1.5rem 0 3rem;
+            transform: translateZ(40px);
         }
 
         .social-links a {
-            margin: 0 18px; /* 連結間距大一點 */
-            font-size: 1.3em; /* 社群連結圖示或文字大一點 */
-            padding: 5px 10px;
-            border: 1px solid #C8E6C9; /* 邊框 */
-            border-radius: 5px;
-            background-color: #DCEDC8; /* 連結背景色 */
-            color: #388E3C; /* 連結文字色 */
+            display: inline-block;
+            margin: 0 16px;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            transform: translateZ(30px);
+            transition: all 0.4s;
         }
-
         .social-links a:hover {
-            background-color: #A5D6A7; /* 滑鼠移入背景色變深 */
-            color: #fff; /* 文字變白色 */
-            border-color: #81C784;
-            text-decoration: none;
+            color: var(--accent);
+            transform: translateZ(50px) translateY(-8px);
+            filter: drop-shadow(0 10px 20px rgba(0,212,255,0.4));
         }
 
+        section { padding: 120px 20px; max-width: 1200px; margin: 0 auto; }
+        h2 {
+            font-size: 3.2rem;
+            text-align: center;
+            margin-bottom: 80px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h2::after {
+            content: '';
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            display: block;
+            margin: 20px auto 0;
+            border-radius: 3px;
+        }
 
-        /* 6. 底部版權 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        /* 3D 卡片 + 滑鼠跟隨傾斜 */
+        .card {
+            background: var(--bg2);
+            padding: 40px 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            transform: translateY(-20px) translateZ(60px);
+            border-color: var(--accent);
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.6),
+                0 0 60px rgba(0,212,255,0.3);
+        }
+        .card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+            transform: translateZ(30px);
+        }
+        .card p {
+            color: var(--text-light);
+            transform: translateZ(20px);
+        }
+
         footer {
-            margin-top: 50px;
-            padding-top: 25px;
-            border-top: 1px solid #C8E6C9; /* 使用淺輔助色作為分隔線 */
-            font-size: 0.9em;
-            color: #757575; /* 顏色稍微深一點 */
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
         }
 
-        /* 7. 響應式設計 (RWD) */
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px 15px;
-                padding: 25px;
-            }
-
-            h1 {
-                font-size: 2.2em;
-            }
-
-            h2 {
-                font-size: 1.1em;
-            }
-
-            .social-links a {
-                margin: 0 10px;
-                font-size: 1.1em;
-            }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 4.5rem; }
+            .hero p { font-size: 1.3rem; }
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="container">
-        
-        <header>
-            <h1>[Chiawei]</h1>
-            <h2>[Student]</h2>
-        </header>
+    <header>
+        <div class="hero" data-aos="zoom-in">
+            <h1 data-aos="fade-down" data-aos-delay="300">Chiawei</h1>
+            <p data-aos="fade-up" data-aos-delay="600">前端工程師 / UI 設計師 / 獨立開發者</p>
+            <div class="social-links" data-aos="fade-up" data-aos-delay="900">
+                <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:your@email.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </header>
 
-        <section class="about">
-            <p>
-                歡迎來到我的個人頁面。
-                我相信設計的簡潔和功能的強大可以完美結合，並致力於創造直觀且引人入勝的體驗。
-            </p>
-        </section>
+    <section data-aos="fade-up">
+        <h2 data-aos="fade-down">關於我</h2>
+        <p style="text-align:center; font-size:1.3rem; max-width:800px; margin:0 auto; transform:translateZ(30px);" data-aos="fade-up" data-aos-delay="300">
+            熱愛用程式碼與設計創造具有未來感的數位體驗。<br>
+            專精 React、Three.js、WebGL，喜歡把 3D 與互動帶入日常網頁。
+        </p>
+    </section>
 
-        <section class="projects">
-            <h3>專注領域</h3>
-            <ul>
-                <li>網頁前端開發 (HTML5, CSS3, JavaScript ES6+)</li>
-                <li>響應式設計與移動優先開發</li>
-                <li>用戶界面 (UI) & 用戶體驗 (UX) 研究</li>
-                <li>[專長領域 3]</li>
-            </ul>
-        </section>
+    <section data-aos="fade-up">
+        <h2 data-aos="fade-down">作品集</h2>
+        <div class="grid">
+            <div class="card" data-aos="fade-up" data-aos-delay="100"
+                 onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
+                <h3>3D 互動儀表板</h3>
+                <p>React Three Fiber + Framer Motion 打造的全 3D 數據可視化平台</p>
+                <br><a href="#" style="color:var(--accent);text-decoration:none;">查看專案 →</a>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300"
+                 onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
+                <h3>WebGL 個人網站</h3>
+                <p>使用 Three.js 與 GLSL shader 打造的沉浸式 3D 個人空間</p>
+                <br><a href="#" style="color:var(--accent);text-decoration:none;">查看專案 →</a>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="500"
+                 onmousemove="tiltCard(event, this)" onmouseleave="resetTilt(this)">
+                <h3>Neumorphism 音樂播放器</h3>
+                <p>結合 3D 軟 UI 與 Web Audio API 的音樂視覺化體驗</p>
+                <br><a href="#" style="color:var(--accent);text-decoration:none;">查看專案 →</a>
+            </div>
+        </div>
+    </section>
 
-        <section class="social-links">
-            <h3>聯繫我</h3>
-            <a href="mailto:your.email@example.com">Email</a>
-            <a href="https://github.com/[Your_GitHub]" target="_blank">GitHub</a>
-            <a href="https://www.linkedin.com/in/[Your_LinkedIn]" target="_blank">LinkedIn</a>
-            </section>
+    <footer data-aos="fade-up">
+        <p>© 2025 Chiawei All rights reserved.</p>
+        <p style="margin-top:12px;">
+            <a href="https://github.com/yourusername" style="color:var(--text-light);text-decoration:none;">GitHub</a> • 
+            <a href="mailto:your@email.com" style="color:var(--text-light);text-decoration:none;">Email</a>
+        </p>
+    </footer>
 
-        <footer>
-            &copy; 2025 [Chiawei]. All Rights Reserved.
-        </footer>
+    <!-- AOS + 3D 卡片互動 -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 1000 });
 
-    </div>
+        // 滑鼠跟隨 3D 傾斜（超讚效果）
+        function tiltCard(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateY = (x - centerX) / 15;
+            const rotateX = (centerY - y) / 15;
 
+            card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(40px)`;
+        }
+        function resetTilt(card) {
+            card.style.transform = 'rotateY(0) rotateX(0) translateZ(0)';
+        }
+    </script>
 </body>
 </html>
